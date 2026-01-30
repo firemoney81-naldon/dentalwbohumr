@@ -1,23 +1,578 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
+
+
+  <!-- JSON-LD Structured Data for SEO (Service type: Dental Clinic) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HealthAndBeautyBusiness",
+      "name": "치과 크라운 비용 비교 센터",
+      "url": "https://yourdomain.com",
+      "areaServed": "대한민국 전역",
+      "description": "2026년 최신 치과 크라운 비용, 종류별 장단점, 건강보험 적용 여부 등을 상세 비교하고 신뢰할 수 있는 치과를 추천해 드리는 정보 플랫폼입니다. 합리적인 가격으로 내 치아에 맞는 최적의 크라운을 선택하도록 돕습니다.",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "치과 크라운 서비스 종류",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "지르코니아 크라운"
+            },
+            "price": "500000",
+            "priceCurrency": "KRW",
+            "description": "높은 강도와 심미성을 자랑하는 치아색 크라운. 어금니 및 앞니 모두에 사용되며 최근 가장 선호도가 높습니다."
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "골드 크라운 (금니)"
+            },
+            "price": "450000",
+            "priceCurrency": "KRW",
+            "description": "생체 친화성이 뛰어나고 강도가 우수하여 어금니에 주로 사용되는 크라운. 치아 삭제량이 적다는 장점이 있습니다."
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "PFM 크라운 (Porcelain Fused to Metal)"
+            },
+            "price": "300000",
+            "priceCurrency": "KRW",
+            "description": "내부 금속에 도자기를 덧씌운 형태. 상대적으로 저렴한 비용으로 심미성을 확보할 수 있는 크라운입니다."
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "E-max 크라운"
+            },
+            "price": "550000",
+            "priceCurrency": "KRW",
+            "description": "투명도가 높아 앞니 크라운에 최적화된 올세라믹 계열 크라운입니다."
+          }
+        ]
+      }
+    }
+  </script>
+
+  <style>
+    /* 폰트 설정 및 기본 스타일 */
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.8;
+      background-color: #f7f9fc; /* 부드러운 배경색 */
+      color: #333;
+      word-break: keep-all; /* 한글 단어 단위 줄바꿈 */
+    }
+    header {
+      background-color: #2a6fdb; /* 메인 색상: 신뢰감을 주는 파란색 */
+      color: white;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    header h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin: 0.5rem 0 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease, transform 0.3s ease;
+      font-size: 1.1rem;
+      padding: 0.5rem 0.8rem;
+      border-radius: 5px;
+    }
+    nav a:hover {
+      color: #ffd700; /* 밝은 노란색 강조 */
+      transform: translateY(-3px);
+    }
+    main {
+      max-width: 1100px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+      background-color: white;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+      border-radius: 15px;
+    }
+    section {
+      padding: 2.5rem 0;
+      border-bottom: 1px dashed #e0e0e0;
+    }
+    h1, h2 {
+      color: #1a4d8c; /* 진한 남색 */
+      font-weight: 800;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-bottom: 3px solid #e0f0ff;
+    }
+    h2 {
+      font-size: 2.2rem;
+    }
+    h3 {
+      color: #2a6fdb;
+      font-size: 1.8rem;
+      margin-top: 2rem;
+      padding-left: 1rem;
+      border-left: 4px solid #2a6fdb;
+    }
+    h4 {
+      font-size: 1.3rem;
+      color: #444;
+      margin-top: 1.5rem;
+    }
+    p {
+      text-align: justify;
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+    ul, ol {
+      margin-bottom: 1.5rem;
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      font-size: 1rem;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    th, td {
+      padding: 1.2rem;
+      border: 1px solid #e9ecef;
+      text-align: center;
+    }
+    th {
+      background-color: #e0f0ff; /* 연한 파란색 배경 */
+      color: #1a4d8c;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    tr:nth-child(even) {
+      background-color: #fcfcfc;
+    }
+    .high-impact {
+      color: #d63333; /* 빨간색 강조 */
+      font-weight: 700;
+    }
+    dl dt {
+      font-weight: 700;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      color: #2a6fdb;
+      background-color: #f5fafd;
+      padding: 1rem;
+      border-left: 5px solid #2a6fdb;
+      transition: background-color 0.3s ease;
+      font-size: 1.1rem;
+      border-radius: 5px;
+    }
+    dl dt:hover {
+      background-color: #e6f2ff;
+    }
+    dl dd {
+      margin: 0.5rem 0 1.5rem 1rem;
+      padding: 1rem 1.5rem;
+      border-left: 2px dashed #ccc;
+      display: none;
+      background-color: #ffffff;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    dl dt.active + dd {
+      display: block;
+    }
+    .cta-button {
+      display: inline-block;
+      background-color: #ff6600; /* 주황색 CTA 버튼 */
+      color: white;
+      font-weight: 700;
+      padding: 1.2rem 3.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      margin: 2.5rem 0;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      text-align: center;
+      font-size: 1.3rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    .cta-button:hover {
+      background-color: #e65c00;
+      transform: translateY(-3px);
+    }
+    .keyword-tags {
+      margin: 2.5rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .keyword-tags a {
+      background-color: #e0f0ff;
+      color: #2a6fdb;
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    .keyword-tags a:hover {
+      background-color: #b3d1ff;
+      transform: scale(1.05);
+    }
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      font-size: 0.9rem;
+      color: #777;
+      background-color: #e0eaf1;
+      margin-top: 3rem;
+      border-top: 1px solid #d0dbe4;
+    }
+    .external-link {
+      display: inline-block;
+      color: #2a6fdb;
+      font-weight: 500;
+      margin-top: 1rem;
+      text-decoration: underline;
+    }
+    .input-group {
+      margin-bottom: 1.5rem;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #444;
+    }
+    .input-group input[type="text"],
+    .input-group input[type="email"],
+    .input-group input[type="tel"],
+    .input-group select {
+      width: calc(100% - 20px);
+      padding: 12px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    .button-container {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    /* 반응형 디자인 */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      nav ul {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      main {
+        padding: 0 1rem;
+        margin: 1.5rem auto;
+      }
+      section {
+        padding: 1.5rem 0;
+      }
+      h2 {
+        font-size: 1.8rem;
+      }
+      h3 {
+        font-size: 1.4rem;
+      }
+      .cta-button {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>2026년 치과 크라운 비용, 종류별 장단점 완벽 가이드</h1>
+    <p>치과 크라운 시술 전 꼭 알아야 할 모든 정보를 비교하고 합리적인 선택을 돕는 전문 정보 플랫폼입니다.</p>
     <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
+      <ul>
+        <li><a href="#크라운종류">크라운 종류 및 비용</a></li>
+        <li><a href="#가격요인">가격 결정 요인</a></li>
+        <li><a href="#건강보험">건강보험 적용</a></li>
+        <li><a href="#시술절차">시술 절차</a></li>
+        <li><a href="#저렴한곳찾기">비용 절약 팁</a></li>
+        <li><a href="#문의하기">간편 견적 문의</a></li>
+      </ul>
     </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+  </header>
+
+  <main>
+    <section id="크라운개요">
+      <h2>치과 크라운 치료란 무엇이며 왜 필요한가요?</h2>
+      <p>치과 치료를 받다 보면 <span class="high-impact">"크라운을 씌워야 합니다"</span>라는 진단을 흔히 듣게 됩니다. 크라운(Crown)은 '왕관'이라는 뜻처럼, 손상되거나 약해진 치아 전체를 감싸 보호하는 인공 보철물을 말합니다. 충치나 외상으로 치아의 대부분이 손상되었거나, 특히 신경치료(근관치료) 후에는 치아가 푸석해지고 약해져 쉽게 깨질 수 있으므로, 치아의 수명을 연장하고 기능을 회복하기 위해 크라운 치료가 필수적입니다. 크라운 치료는 단순히 치아를 덮는 것을 넘어, 주변 치아와의 교합을 맞추고 심미적인 만족도를 높여 일상생활의 질을 향상시키는 중요한 치료입니다.</p>
+      <p>크라운의 필요성은 치아 손상 정도에 따라 달라집니다. 충치가 초기 단계라면 레진이나 인레이로 충분하지만, 손상 범위가 치아의 50% 이상이거나 신경치료를 진행한 치아는 반드시 크라운을 씌워야 합니다. <span class="high-impact">적절한 시기에 크라운을 씌우지 않으면 치아가 부러지거나 쪼개져 결국 발치로 이어질 수 있습니다.</span> 따라서 치과에서 크라운 치료를 권유받았다면, 이를 미루지 않고 내게 맞는 최적의 보철물을 선택하는 것이 중요합니다.</p>
+      
+      <h3>크라운 선택 시 고려해야 할 핵심 요소</h3>
+      <p>크라운을 선택할 때 가장 중요한 요소는 비용뿐만 아니라 '재료의 특성'입니다. 치아의 위치(앞니/어금니), 씹는 힘(교합력), 심미성(눈에 보이는 정도), 그리고 예산에 따라 적합한 크라운 종류가 다릅니다. 이 섹션에서는 2026년 기준 <span class="high-impact">치과 크라운 비용의 평균적인 예상 금액</span>과 <span class="high-impact">크라운 종류별 장단점</span>을 상세히 비교하여 현명한 결정을 돕겠습니다.</p>
+    </section>
+
+    <section id="크라운종류">
+      <h2>지르코니아, 골드, PFM: 크라운 종류별 비용 및 장단점 비교</h2>
+      <p>치과 크라운 재료는 크게 금속 계열(골드), 금속+도자기 계열(PFM), 그리고 치아색 계열(지르코니아, E-max)로 나뉩니다. 각 재료는 고유의 특징과 <span class="high-impact">가격대</span>를 형성하고 있으며, 환자의 상황에 맞춰 선택해야 합니다. 아래 표는 2026년 기준 <span class="high-impact">크라운 종류별 평균 비용</span> 및 특징을 정리한 것입니다.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>크라운 종류</th>
+            <th>주요 재료</th>
+            <th>2026년 평균 예상 비용 (KRW)</th>
+            <th>주요 특징 및 장점</th>
+            <th>단점 및 주의사항</th>
+            <th>적합한 치아 위치</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>지르코니아 크라운</strong></td>
+            <td>지르코니아(Zirconia)</td>
+            <td><span class="high-impact">450,000 ~ 650,000원</span></td>
+            <td><span class="highlight">심미성, 강도 동시 충족</span>: 자연치아와 유사한 색상과 투명도로 심미성이 매우 뛰어남. 강도가 매우 높아 어금니에도 적합하며, 금속 알러지 걱정 없음.</td>
+            <td>가격이 상대적으로 비쌈. 맞닿는 치아(대합치) 마모 우려. 치아 삭제량이 많을 수 있음.</td>
+            <td>앞니, 어금니 (전체)</td>
+          </tr>
+          <tr>
+            <td><strong>골드 크라운 (금니)</strong></td>
+            <td>금(Gold) 합금</td>
+            <td><span class="high-impact">400,000 ~ 600,000원</span></td>
+            <td><span class="highlight">생체 친화성, 치아 삭제량 적음</span>: 치아 마모도와 비슷해 주변 치아에 부담이 적음. 생체 친화적이며 부식이 거의 없음. 깨질 염려가 없음.</td>
+            <td>심미성이 낮음 (금색). 최근 금 시세에 따라 <span class="high-impact">가격 변동폭</span>이 큼.</td>
+            <td>어금니 (특히 씹는 힘이 강한 경우)</td>
+          </tr>
+          <tr>
+            <td><strong>PFM 크라운</strong></td>
+            <td>금속+도자기</td>
+            <td><span class="high-impact">300,000 ~ 450,000원</span></td>
+            <td><span class="highlight">비용 효율성</span>: 지르코니아나 골드에 비해 <span class="high-impact">저렴한 비용</span>. 심미성도 어느 정도 확보 가능.</td>
+            <td>내부 금속이 비쳐 잇몸 경계가 어둡게 보일 수 있음. 도자기 부분이 깨질 위험이 있음. (도재 파절)</td>
+            <td>앞니, 작은 어금니 (심미성과 비용을 동시에 고려할 때)</td>
+          </tr>
+          <tr>
+            <td><strong>E-max 크라운</strong></td>
+            <td>올세라믹 (리튬 디실리케이트)</td>
+            <td><span class="high-impact">500,000 ~ 700,000원</span></td>
+            <td><span class="highlight">최고의 심미성</span>: 자연치아와 가장 흡사한 투명도와 색상. 앞니의 심미성이 매우 중요할 때 추천.</td>
+            <td>지르코니아보다 강도가 약하여 어금니보다는 앞니에 적합. 가격대가 높은 편.</td>
+            <td>앞니</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>참고:</strong> 위 <span class="high-impact">크라운 견적 금액</span>은 2026년 기준 전국 평균 <span class="high-impact">예상 가격</span>이며, 치과 병원급 vs 의원급, 지역별 물가, <span class="high-impact">의료진의 숙련도</span>, 치과 장비 등에 따라 <span class="high-impact">비용 차이</span>가 크게 발생할 수 있습니다.</p>
+
+      <h3>크라운 종류별 장단점 심층 분석: 지르코니아 vs 골드 vs PFM</h3>
+      <p>가장 많이 고민하는 세 가지 크라운 재료에 대해 좀 더 깊이 있게 살펴보겠습니다. <span class="high-impact">내돈내산 후기</span>나 <span class="high-impact">크라운 비교</span> 글을 찾아보면 지르코니아와 골드의 선택을 두고 의견이 분분합니다. 어떤 재료가 '최고'라고 단정하기보다는, 환자 개개인의 구강 환경에 맞춰 선택하는 것이 중요합니다.</p>
+      <dl>
+        <dt tabindex="0" aria-expanded="false"><strong>Q. 지르코니아 크라운의 장점과 단점은 무엇인가요?</strong></dt>
+        <dd>지르코니아는 치아색을 띠는 재료 중 가장 강도가 우수합니다. <span class="high-impact">심미성</span>과 <span class="high-impact">내구성</span>을 동시에 만족시키기 때문에 앞니는 물론 씹는 힘이 강하게 작용하는 어금니에도 널리 사용됩니다. 금속이 들어가지 않아 알러지 반응이나 잇몸 변색 우려가 없고, 최근에는 <span class="high-impact">멀티레이어 지르코니아</span>와 같이 심미성을 더욱 높인 재료도 개발되어 선택의 폭이 넓어졌습니다. 단점으로는 강도가 너무 강해 맞닿는 치아가 마모될 수 있다는 점과, 상대적으로 치아 삭제량이 많다는 점이 있습니다.</dd>
+
+        <dt tabindex="0" aria-expanded="false"><strong>Q. 골드 크라운(금니)은 옛날 방식 아닌가요? 장점은 여전한가요?</strong></dt>
+        <dd>골드 크라운은 <span class="high-impact">생체 친화성</span>이 뛰어나 치과 재료로 오랫동안 사랑받아왔습니다. 특히 치아와 유사한 마모도를 가지고 있어 주변 치아에 해를 가하지 않고, 충격을 흡수하는 탄성이 있어 씹는 힘이 강한 사람에게도 적합합니다. 치아를 씌울 때 필요한 삭제량도 상대적으로 적다는 장점이 있습니다. 다만, <span class="high-impact">심미성이 낮아</span> 눈에 띄는 위치의 치아에는 적합하지 않고, 최근 금 <span class="high-impact">시세 변동</span>에 따라 <span class="high-impact">크라운 비용</span>이 비싸지는 추세입니다.</dd>
+
+        <dt tabindex="0" aria-expanded="false"><strong>Q. PFM 크라운은 가성비가 좋은가요?</strong></dt>
+        <dd>PFM 크라운은 내부의 금속 구조물 위에 도자기를 덧씌운 형태로, <span class="high-impact">지르코니아</span>나 <span class="high-impact">골드</span>에 비해 <span class="high-impact">저렴한 가격</span>이 장점입니다. 그러나 시간이 지나면서 잇몸 경계 부위의 금속이 비쳐 보여 <span class="high-impact">심미성이 떨어질 수 있고</span>, 도자기 부분이 충격에 의해 깨질 수 있습니다. 또한 금속 성분 때문에 <span class="high-impact">금속 알러지</span>가 있는 환자에게는 적합하지 않습니다. 최근에는 PFM 대신 <span class="high-impact">지르코니아</span>가 <span class="high-impact">심미성</span>과 <span class="high-impact">강도</span> 면에서 더 선호되고 있어 PFM 사용은 줄어드는 추세입니다.</dd>
+      </dl>
+    </section>
+
+    <section id="가격요인">
+      <h2>치과 크라운 비용에 영향을 미치는 핵심 요소 분석</h2>
+      <p>치과마다 <span class="high-impact">크라운 가격</span>이 다른 이유는 무엇일까요? <span class="high-impact">크라운 견적</span>을 결정하는 요인은 단순히 재료비뿐만 아니라, <span class="high-impact">의료진의 숙련도</span>, <span class="high-impact">치과 장비</span>, <span class="high-impact">추가 치료 여부</span> 등 복합적입니다. 환자가 알아야 할 주요 요인들을 정리했습니다.</p>
+      <dl>
+        <dt tabindex="0" aria-expanded="false"><strong>Q. 치과 위치(지역)에 따라 가격 차이가 큰가요?</strong></dt>
+        <dd>네, 맞습니다. 일반적으로 서울 강남, 서초 등 대형 치과가 밀집한 지역은 평균 <span class="high-impact">크라운 비용</span>이 높게 형성되는 경향이 있습니다. 상대적으로 지방이나 중소도시의 치과는 <span class="high-impact">저렴한 가격대</span>를 보이는 경우가 많습니다. 이는 임대료, 인건비, 마케팅 비용 등의 차이에서 비롯됩니다. 다만, <span class="high-impact">가격이 저렴한곳</span>이라고 해서 무조건 실력이 떨어진다고 할 수 없으므로, <span class="high-impact">내돈내산 후기</span>나 <span class="high-impact">치과 순위</span>보다는 직접 방문하여 상담받아보는 것이 중요합니다.</dd>
+
+        <dt tabindex="0" aria-expanded="false"><strong>Q. 신경치료(근관치료) 여부가 크라운 비용에 어떤 영향을 미치나요?</strong></dt>
+        <dd>치아 손상이 심하여 <span class="high-impact">신경치료</span>가 필요한 경우, 크라운 치료비 외에 <span class="high-impact">신경치료 비용</span>이 추가로 발생합니다. 신경치료는 치아 내부의 신경 조직을 제거하고 소독하는 과정으로, 보통 2~4회 내원이 필요합니다. <span class="high-impact">신경치료 비용</span>은 건강보험이 적용되므로 상대적으로 부담이 적지만, 신경치료 후 <span class="high-impact">크라운</span>을 씌우지 않으면 치아가 파절될 위험이 높아지므로 반드시 크라운을 함께 진행해야 합니다.</dd>
+
+        <dt tabindex="0" aria-expanded="false"><strong>Q. 디지털 치과 (CAD/CAM) 장비가 비용에 미치는 영향은 무엇인가요?</strong></dt>
+        <dd>최근 많은 치과에서는 3D 스캐너와 CAD/CAM 장비를 이용하여 <span class="high-impact">크라운 제작</span>을 진행합니다. 이 기술을 사용하면 보다 정밀한 보철물 제작이 가능하며, 경우에 따라 당일 치료(One-day Crown)도 가능합니다. 이러한 최신 장비를 갖춘 치과는 일반적으로 <span class="high-impact">크라운 비용</span>이 높을 수 있지만, <span class="high-impact">정밀도와 치료 기간 단축</span>이라는 장점을 제공합니다.</dd>
+
+        <dt tabindex="0" aria-expanded="false"><strong>Q. 치아 기둥(Post) 치료가 필요한 경우는 언제인가요?</strong></dt>
+        <dd>신경치료를 받은 치아는 내부가 비어있어 약해지기 쉽습니다. 특히 치아의 머리 부분(치관부)이 많이 파괴된 경우에는 크라운을 지탱할 힘이 부족할 수 있습니다. 이때 치아 뿌리(치근부)에 기둥(Post)을 세워 보강하는 치료가 필요합니다. 기둥 재료로는 금속 기둥(Metal Post)이나 <span class="high-impact">화이버 포스트</span>(Fiber Post)가 사용되며, <span class="high-impact">파이버 포스트</span>가 심미성과 탄성 면에서 더 우수해 최근 선호됩니다. <span class="high-impact">기둥 치료 비용</span>은 별도로 청구됩니다.</dd>
+      </dl>
+    </section>
+
+    <section id="건강보험">
+      <h2>크라운 치료, 건강보험(실비) 적용 여부 및 2026년 기준</h2>
+      <p>많은 환자들이 <span class="high-impact">치과 크라운 비용</span>에 대해 문의할 때 <span class="high-impact">건강보험 적용</span> 여부를 궁금해합니다. 아쉽게도 <span class="high-impact">크라운 치료는 비급여 항목</span>이므로 건강보험 혜택을 받을 수 없습니다. 2026년 현재까지의 <span class="high-impact">치과 건강보험</span>은 주로 충치치료 중 레진(만 12세 이하), 임플란트(만 65세 이상), 틀니(만 65세 이상) 등에 한정적으로 적용됩니다.</p>
+      <p>하지만 <span class="high-impact">크라운 치료</span>의 전 단계인 <span class="high-impact">신경치료</span>는 <span class="high-impact">건강보험 급여 항목</span>에 해당합니다. 따라서 <span class="high-impact">신경치료를 동반한 크라운 치료</span>를 받는다면, 신경치료에 대해서는 보험 혜택을 받을 수 있습니다. 2026년 <span class="high-impact">치과 수가</span>(의료 행위 가격)는 전년 대비 2% 인상되는 등 변동이 있었지만, 이는 급여 항목에 대한 수가 인상이며 비급여인 <span class="high-impact">크라운 비용</span>에는 직접적인 영향을 미치지 않습니다.</p>
+
+      <h3>개인 실비보험을 활용한 비용 절감 방안</h3>
+      <p>개인이 가입한 <span class="high-impact">실손의료보험(실비보험)</span>을 통해 <span class="high-impact">크라운 비용</span> 일부를 보상받을 수 있는지 확인해 봐야 합니다. 일반적인 <span class="high-impact">실비보험</span>은 비급여 항목인 치과 치료비를 보상하지 않는 것이 원칙입니다. 그러나 최근 판매되는 치아보험은 <span class="high-impact">크라운, 임플란트</span> 등 비급여 치료에 대해 정해진 한도 내에서 보상하는 경우가 많습니다. <span class="high-impact">내돈내산</span>으로 치료를 받기 전, 보험 가입 여부와 보장 내용을 반드시 확인하는 것이 좋습니다.</p>
+      <p><strong>참고:</strong> 건강보험심사평가원에서 제공하는 '비급여 진료비' 공개 정보를 통해 지역별 <span class="high-impact">치과 크라운 가격</span>을 비교할 수 있습니다. 이 정보를 활용하면 <span class="high-impact">평균 가격</span>과 <span class="high-impact">최저가</span>를 파악하여 <span class="high-impact">저렴한곳</span>을 찾는 데 도움이 됩니다.</p>
+      <a href="https://www.hira.or.kr/main.do" target="_blank" rel="noopener noreferrer" class="external-link">건강보험심사평가원 비급여 진료비 확인 (hira.or.kr)</a>
+    </section>
+
+    <section id="시술절차">
+      <h2>성공적인 크라운 시술을 위한 절차와 주의사항</h2>
+      <p><span class="high-impact">치과 크라운 시술</span>은 여러 단계를 거쳐 진행됩니다. 치료 과정을 미리 이해하면 불안감을 줄이고 <span class="high-impact">크라운 후기</span>를 찾아볼 때도 도움이 됩니다. 일반적으로 3~4회의 내원이 필요하며, 각 단계별 <span class="high-impact">주의사항</span>을 숙지해야 합니다.</p>
+
+      <h3>1단계: 진단 및 치료 계획 수립</h3>
+      <p>치과 내원 후 X-ray 촬영 및 구강 검진을 통해 치아 손상 정도를 확인합니다. 이 단계에서 <span class="high-impact">크라운</span>이 필요한지, <span class="high-impact">신경치료</span>가 필요한지 판단합니다. <span class="high-impact">의료진의 숙련도</span>에 따라 치료 계획이 달라질 수 있으므로, 여러 치과의 <span class="high-impact">견적과 상담</span>을 비교해 보는 것이 좋습니다. 특히 <span class="high-impact">크라운 종류</span>(지르코니아, 골드 등) 선택이 이루어집니다.</p>
+
+      <h3>2단계: 치아 삭제 및 인상 채득 (본뜨기)</h3>
+      <p>크라운을 씌우기 위해서는 치아의 표면을 일정량 삭제해야 합니다. <span class="high-impact">크라운 종류</span>에 따라 삭제량이 달라집니다. <span class="high-impact">골드 크라운</span>은 삭제량이 적은 편이고, <span class="high-impact">지르코니아</span>나 <span class="high-impact">PFM</span>은 일정 두께 이상 삭제해야 합니다. 치아 삭제 후, 정밀한 <span class="high-impact">본뜨기(인상 채득)</span>를 진행하여 맞춤형 크라운 제작을 위한 데이터를 확보합니다. 최근에는 3D 스캐너를 이용한 디지털 인상 채득이 늘고 있습니다.</p>
+
+      <h3>3단계: 임시 크라운 착용 및 최종 크라운 제작</h3>
+      <p>본을 뜬 후, 최종 크라운이 완성될 때까지 치아를 보호하기 위해 <span class="high-impact">임시 크라운</span>을 씌웁니다. <span class="high-impact">임시 크라운</span>은 최종 보철물에 비해 약하므로, 단단하거나 질긴 음식은 피하고, 끈적이는 음식(카라멜, 껌)도 섭취하지 않도록 주의해야 합니다. <span class="high-impact">임시 크라운</span>이 빠진 경우 즉시 치과에 방문하여 재부착해야 합니다.</p>
+      <p>이 기간 동안 기공소에서 환자에게 맞는 <span class="high-impact">크라운</span>이 제작됩니다. <span class="high-impact">크라운 제작</span> 기간은 보통 5~7일 정도 소요되며, 신경치료 기간까지 합하면 평균적으로 3주 이상 걸릴 수 있습니다.</p>
+
+      <h3>4단계: 최종 크라운 시적 및 접착</h3>
+      <p>제작된 최종 <span class="high-impact">크라운</span>을 환자의 치아에 맞춰봅니다. 이때 <span class="high-impact">교합(물리는 정도)</span>과 <span class="high-impact">색상</span>, <span class="high-impact">이물감</span> 등을 꼼꼼히 확인합니다. 불편한 점이 있다면 즉시 의료진에게 알려 수정해야 합니다. 최종 확인 후, <span class="high-impact">크라운</span>을 특수 접착제로 영구 접착합니다. 접착 후 24시간 정도는 끈적이는 음식을 피하고 부드러운 음식을 섭취하는 것이 좋습니다.</p>
+    </section>
+
+    <section id="저렴한곳찾기">
+      <h2>크라운 비용 절약 팁과 믿을 수 있는 치과 선택 요령</h2>
+      <p><span class="high-impact">치과 크라운 비용</span>이 부담스러울 때 <span class="high-impact">저렴한곳</span>이나 <span class="high-impact">싼곳</span>을 찾는 것이 인지상정입니다. 하지만 무조건 저가만을 추구하면 <span class="high-impact">크라운 수명</span>이 단축되거나 재시술이 필요할 수 있습니다. <span class="high-impact">합리적인 비용</span>으로 만족스러운 결과를 얻기 위한 팁을 소개합니다.</p>
+
+      <h3>✅ 1. 최소 2~3곳의 치과에서 견적 비교하기</h3>
+      <p><span class="high-impact">크라운 비용</span>은 치과마다 천차만별입니다. <span class="high-impact">지르코니아 크라운</span>의 경우에도 40만 원대부터 80만 원대까지 다양하게 형성되어 있습니다. 반드시 2~3곳 이상의 치과에서 상담을 받아보고, <span class="high-impact">크라운 종류</span>와 <span class="high-impact">견적 금액</span>을 비교해야 합니다. 이때 <span class="high-impact">내돈내산 후기</span>나 온라인 <span class="high-impact">치과 순위</span>에 의존하기보다, 직접 방문하여 <span class="high-impact">의료진의 전문성</span>을 확인하는 것이 중요합니다.</p>
+
+      <h3>✅ 2. 정품 인증서 및 사후 관리 시스템 확인</h3>
+      <p>크라운 시술에 사용되는 재료는 <span class="high-impact">지르코니아 블록</span>이나 <span class="high-impact">금 합금</span> 등 정품 재료를 사용하는지 확인해야 합니다. 일부 저가 치과의 경우 저급 재료를 사용하여 <span class="high-impact">크라운 수명</span>이 짧아지거나 부작용이 발생할 수 있습니다. 시술 후 <span class="high-impact">사후 관리(AS)</span> 기간이 명시된 보증서(Warranty)를 제공하는지 확인하는 것도 중요합니다. 보증 기간은 보통 1~2년이며, 재시술이 필요할 경우 <span class="high-impact">비용 부담</span>을 줄일 수 있습니다.</p>
+
+      <h3>✅ 3. 이벤트를 활용하되 신중하게 접근하기</h3>
+      <p>많은 치과들이 <span class="high-impact">크라운 이벤트</span>를 진행하며 <span class="high-impact">저렴한 가격</span>을 제시합니다. <span class="high-impact">크라운 비용</span>을 절약하는 좋은 방법이 될 수 있지만, <span class="high-impact">이벤트 가격</span>이 지나치게 낮은 경우 <span class="high-impact">추가 비용</span> 발생 여부, <span class="high-impact">크라운 재료의 질</span>, <span class="high-impact">의료진의 숙련도</span> 등을 꼼꼼히 확인해야 합니다. <span class="high-impact">내돈내산 후기</span> 등을 통해 실제 경험자의 의견을 참고하는 것도 좋습니다.</p>
+
+      <h3>✅ 4. 철저한 사후 관리로 크라운 수명 늘리기</h3>
+      <p><span class="high-impact">크라운</span>을 씌웠다고 해서 영구적인 것은 아닙니다. 일반적으로 <span class="high-impact">크라운 수명</span>은 7~10년 정도입니다. <span class="high-impact">크라운</span> 주변으로 충치가 생기거나 잇몸 염증이 발생하면 <span class="high-impact">재시술</span>이 필요합니다. <span class="high-impact">크라운</span>의 수명을 늘리려면 식후 칫솔질뿐만 아니라 치간 칫솔, 치실 사용을 생활화해야 하며, 정기적인 치과 검진을 통해 치아 상태를 점검해야 합니다.</p>
+      <a href="https://www.kca.go.kr/home/main.do" target="_blank" rel="noopener noreferrer" class="external-link">한국소비자원 피해구제 정보 확인 (kca.go.kr)</a>
+      <a href="https://namu.wiki/w/%EC%B9%98%EA%B3%BC%EC%B9%98%EB%A3%8C" target="_blank" rel="noopener noreferrer" class="external-link">치과 치료 관련 정보 나무위키 (namu.wiki)</a>
+    </section>
+    
+    <section id="자주묻는질문">
+      <h2>자주 묻는 질문 (FAQ) - 크라운 비용, 관리, 부작용</h2>
+      <dl>
+        <dt tabindex="0" aria-expanded="false"><strong>Q. 크라운 시술 후 통증이 있나요?</strong></dt>
+        <dd>크라운 치료는 치아를 삭제하고 씌우는 과정이므로, 시술 후 일정 기간 <span class="high-impact">시린 증상</span>이나 <span class="high-impact">이물감</span>이 느껴질 수 있습니다. 특히 신경치료를 하지 않은 치아의 경우 민감하게 반응할 수 있습니다. 대부분 1~2주 내로 적응되지만, 통증이 심하거나 지속된다면 치과에 문의해야 합니다.</dd>
+
+        <dt tabindex="0" aria-expanded="false"><strong>Q. 크라운 수명은 얼마나 되나요? 재시술 비용은 얼마나 드나요?</strong></dt>
+        <dd><span class="high-impact">크라운 수명</span>은 일반적으로 7~10년으로 알려져 있지만, <span class="high-impact">환자의 관리</span>와 <span class="high-impact">크라운 재료</span>에 따라 수명은 천차만별입니다. <span class="high-impact">재시술 비용</span>은 처음 시술과 동일한 방식으로 <span class="high-impact">크라운 견적</span>이 책정됩니다. 따라서 <span class="high-impact">크라운</span> 주변 청결 관리를 철저히 하고 정기적인 검진을 통해 <span class="high-impact">크라운 수명</span>을 늘리는 것이 중요합니다.</dd>
+
+        <dt tabindex="0" aria-expanded="false"><strong>Q. 크라운 종류 중 '저렴한곳'을 찾으면 지르코니아가 아닌 PFM을 추천받나요?</strong></dt>
+        <dd><span class="high-impact">저렴한곳</span>을 찾을 때 <span class="high-impact">지르코니아</span> 대신 PFM을 추천받는 경우가 있습니다. PFM은 <span class="high-impact">지르코니아</span>보다 <span class="high-impact">가격</span>이 저렴하므로, <span class="high-impact">비용 부담</span>이 클 경우 고려할 수 있는 선택지입니다. 하지만 <span class="high-impact">심미성</span>과 <span class="high-impact">수명</span> 면에서 PFM의 단점을 충분히 인지하고 결정해야 합니다. 특히 <span class="high-impact">어금니</span>의 경우 <span class="high-impact">강도</span>가 중요한데, PFM은 도자기 부분이 깨질 위험이 있다는 점을 고려해야 합니다.</dd>
+
+        <dt tabindex="0" aria-expanded="false"><strong>Q. 앞니와 어금니 크라운 재료 선택 기준이 다른가요?</strong></dt>
+        <dd>네, 다릅니다. <span class="high-impact">앞니 크라운</span>은 <span class="high-impact">심미성</span>이 가장 중요하므로 <span class="high-impact">지르코니아</span>나 <span class="high-impact">E-max</span>처럼 자연치아와 유사한 색상과 투명도를 가진 재료를 추천합니다. <span class="high-impact">어금니 크라운</span>은 씹는 힘(교합력)을 견딜 수 있는 <span class="high-impact">강도</span>가 중요하므로, <span class="high-impact">지르코니아</span>나 <span class="high-impact">골드 크라운</span>이 선호됩니다.</dd>
+      </dl>
+    </section>
+    
+    <section id="문의하기">
+      <h2>나에게 맞는 크라운 예상 비용 무료 견적 문의하기</h2>
+      <p>환자 개개인의 치아 상태는 모두 다르므로, 정확한 <span class="high-impact">크라운 비용</span>은 전문의와의 상담을 통해 결정됩니다. <span class="high-impact">2026년 최신 가격</span>과 <span class="high-impact">크라운 종류</span>에 대한 궁금증을 전문가에게 직접 문의해 보세요.</p>
+      <div class="input-form">
+        <div class="input-group">
+          <label for="name">이름</label>
+          <input type="text" id="name" placeholder="이름을 입력해 주세요">
+        </div>
+        <div class="input-group">
+          <label for="phone">연락처</label>
+          <input type="tel" id="phone" placeholder="휴대폰 번호를 입력해 주세요">
+        </div>
+        <div class="input-group">
+          <label for="location">희망 지역</label>
+          <input type="text" id="location" placeholder="예: 서울 강남, 경기도 수원">
+        </div>
+        <div class="input-group">
+          <label for="crown-type">문의 크라운 종류</label>
+          <select id="crown-type">
+            <option value="">선택하세요</option>
+            <option value="지르코니아">지르코니아 크라운</option>
+            <option value="골드">골드 크라운</option>
+            <option value="pfm">PFM 크라운</option>
+            <option value="e-max">E-max 크라운</option>
+            <option value="기타">기타 (상담 필요)</option>
+          </select>
+        </div>
+        <div class="button-container">
+          <a href="#" class="cta-button" aria-label="치과 크라운 비용 무료 견적 신청">무료 견적 상담 신청</a>
+        </div>
+      </div>
+      <p>이 정보는 2026년도 치과 보철물 <span class="high-impact">평균 비용</span>을 기준으로 작성되었으며, 실제 <span class="high-impact">견적 금액</span>은 치과 방문 상담을 통해 최종 확정됩니다.</p>
+    </section>
+    
+    <div class="keyword-tags" aria-label="연관 검색 키워드">
+      <a href="#크라운종류">크라운 종류</a>
+      <a href="#가격요인">치과 크라운 가격</a>
+      <a href="#크라운종류">지르코니아 크라운</a>
+      <a href="#크라운종류">골드 크라운</a>
+      <a href="#크라운종류">PFM 크라운</a>
+      <a href="#가격요인">치과 크라운 견적</a>
+      <a href="#가격요인">크라운 비용</a>
+      <a href="#가격요인">크라운 평균 비용</a>
+      <a href="#가격요인">치아 크라운 예상 금액</a>
+      <a href="#건강보험">크라운 건강보험</a>
+      <a href="#저렴한곳찾기">크라운 저렴한곳</a>
+      <a href="#저렴한곳찾기">크라운 싼곳</a>
+      <a href="#자주묻는질문">크라운 내돈내산 후기</a>
+      <a href="#시술절차">크라운 시술 과정</a>
+      <a href="#시술절차">크라운 시술 주의사항</a>
+      <a href="#저렴한곳찾기">크라운 업체 순위</a>
+      <a href="#크라운종류">크라운 종류별 장단점</a>
+      <a href="#크라운종류">앞니 크라운</a>
+      <a href="#크라운종류">어금니 크라운</a>
+      <a href="#건강보험">치과 실비보험</a>
+      <a href="#가격요인">신경치료 비용</a>
+      <a href="#저렴한곳찾기">치과 이벤트</a>
+      <a href="#자주묻는질문">크라운 수명</a>
+      <a href="#크라운종류">올세라믹 크라운</a>
+      <a href="#크라운종류">E-max 크라운</a>
+      <a href="#가격요인">크라운 견적 비교</a>
+      <a href="#저렴한곳찾기">치과 추천</a>
+      <a href="#가격요인">크라운 가격 차이점</a>
+      <a href="#시술절차">크라운 시술 기간</a>
+      <a href="#크라운종류">금니 vs 지르코니아</a>
+    </div>
+    
+  </main>
+
+  <script>
+    // FAQ 아코디언 기능 (접기/펼치기)
+    document.querySelectorAll('dl dt').forEach((dt) => {
+      dt.addEventListener('click', () => {
+        const expanded = dt.getAttribute('aria-expanded') === 'true' || false;
+        dt.setAttribute('aria-expanded', !expanded);
+        dt.classList.toggle('active');
+      });
+      dt.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          dt.click();
+        }
+      });
+    });
+  </script>
+
+  
